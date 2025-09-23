@@ -98,6 +98,16 @@ aux:
     addl j, %eax
     movb %al, c
 
+    # int *iptr; (rax -> iptr)
+
+    # iptr = &i;
+    movq $i, %rax
+
+    # j = j + *iptr;
+    movl j, %edx
+    addl (%rax), %edx
+    movl %edx, j
+
     leave
 
     ret
