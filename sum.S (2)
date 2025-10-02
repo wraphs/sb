@@ -1,0 +1,48 @@
+.data
+
+.globl nums
+.align 4
+nums: .int 65, -105, 111, 34
+
+.globl s
+.align 4
+s: .int 0
+
+.text
+
+
+.globl sum
+
+sum:
+
+    pushq %rbp
+
+    movq  %rsp, %rbp
+
+    # declarando contadores
+    movl $0, %ecx # i
+    movl s, %eax # s
+
+    # enquanto i < 4 faça -> se i >= 4 saia do loop
+loop:
+    cmpl $4, %ecx
+    jge foradoloop
+    # s = s + nums[i]
+    movq $nums, %rdx # rdx = $nums
+    movslq %ecx, %r8 # r8 = (long)i
+    imulq $4, %r8 # r8 = i * sizeof(int)
+    addq %rdx, %r8 # r8 = $nums + (i * sizeof(nums))
+    addl (%r8), %eax
+    movl %eax, s
+
+    # i++ e retornar ao inicio do loop
+    addl $1, %ecx
+    jmp loop
+
+
+foradoloop:
+
+
+    leave
+
+    ret
